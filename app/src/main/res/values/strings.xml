@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">App de Cadastro</string>
+    <string name="produtos">Produtos</string>
+    <string name="clientes">Clientes</string>
+    <string name="fornecedores">Fornecedores</string>
+    <string name="sair">Sair</string>
+    <string name="listagem">Listagem</string>
+    <string name="cadastrar">Cadastrar</string>
 </resources>
