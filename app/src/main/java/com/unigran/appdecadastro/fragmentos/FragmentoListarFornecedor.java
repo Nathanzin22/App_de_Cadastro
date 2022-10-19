@@ -7,8 +7,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.unigran.appdecadastro.R;
+import com.unigran.appdecadastro.db.DBHelper;
+import com.unigran.appdecadastro.db.FornecedorDB;
+import com.unigran.appdecadastro.entidades.Fornecedor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,10 +65,32 @@ public class FragmentoListarFornecedor extends Fragment {
         }
     }
 
+    ListView listaDados;
+    static List<Fornecedor> listaForneceres;
+    static ArrayAdapter adapter;
+    static FornecedorDB fornecedorDB;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragmento_listar_fornecedor, container, false);
+        View view = inflater.inflate(R.layout.fragmento_listar_fornecedor, container, false);
+
+        listaDados = view.findViewById(R.id.listFornecedor);
+
+        DBHelper db = new DBHelper(getActivity());
+        fornecedorDB = new FornecedorDB(db);
+
+        listaForneceres = new ArrayList<>();
+        adapter = new ArrayAdapter(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, listaForneceres);
+        listaDados.setAdapter(adapter);
+
+        atualizarListaForncedor();
+
+        return view;
+    }
+
+    protected static void atualizarListaForncedor() {
+        fornecedorDB.listar(listaForneceres);
+        adapter.notifyDataSetChanged();
     }
 }

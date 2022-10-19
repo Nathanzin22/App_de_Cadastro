@@ -7,8 +7,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.unigran.appdecadastro.R;
+import com.unigran.appdecadastro.db.ClienteDB;
+import com.unigran.appdecadastro.db.DBHelper;
+import com.unigran.appdecadastro.entidades.Cliente;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,10 +65,32 @@ public class FragmentoListarCliente extends Fragment {
         }
     }
 
+    ListView listaDados;
+    static List<Cliente> listaClientes;
+    static ArrayAdapter adapter;
+    static ClienteDB clienteDB;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragmento_listar_cliente, container, false);
+        View view = inflater.inflate(R.layout.fragmento_listar_cliente, container, false);
+
+        listaDados = view.findViewById(R.id.listCliente);
+
+        DBHelper db = new DBHelper(getActivity());
+        clienteDB = new ClienteDB(db);
+
+        listaClientes = new ArrayList<>();
+        adapter = new ArrayAdapter(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, listaClientes);
+        listaDados.setAdapter(adapter);
+
+        atualizarListaCliente();
+
+        return view;
+    }
+
+    protected static void atualizarListaCliente() {
+        clienteDB.listar(listaClientes);
+        adapter.notifyDataSetChanged();
     }
 }

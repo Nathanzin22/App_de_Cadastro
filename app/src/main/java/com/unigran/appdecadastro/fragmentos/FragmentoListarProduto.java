@@ -7,8 +7,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.unigran.appdecadastro.R;
+import com.unigran.appdecadastro.db.DBHelper;
+import com.unigran.appdecadastro.db.ProdutoDB;
+import com.unigran.appdecadastro.entidades.Produto;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,10 +65,32 @@ public class FragmentoListarProduto extends Fragment {
         }
     }
 
+    ListView listaDados;
+    static List<Produto> listaProdutos;
+    static ArrayAdapter adapter;
+    static ProdutoDB produtoDB;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragmento_listar_produto, container, false);
+        View view = inflater.inflate(R.layout.fragmento_listar_produto, container, false);
+
+        listaDados = view.findViewById(R.id.listProduto);
+
+        DBHelper db = new DBHelper(getActivity());
+        produtoDB = new ProdutoDB(db);
+
+        listaProdutos = new ArrayList<>();
+        adapter = new ArrayAdapter(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, listaProdutos);
+        listaDados.setAdapter(adapter);
+
+        atualizarListaProduto();
+
+        return view;
+    }
+
+    protected static void atualizarListaProduto() {
+        produtoDB.listar(listaProdutos);
+        adapter.notifyDataSetChanged();
     }
 }

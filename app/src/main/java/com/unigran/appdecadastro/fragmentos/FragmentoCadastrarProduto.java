@@ -7,8 +7,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.unigran.appdecadastro.R;
+import com.unigran.appdecadastro.db.DBHelper;
+import com.unigran.appdecadastro.db.ProdutoDB;
+import com.unigran.appdecadastro.entidades.Produto;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,7 +66,34 @@ public class FragmentoCadastrarProduto extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragmento_cadastrar_produto, container, false);
+        View view = inflater.inflate(R.layout.fragmento_cadastrar_produto, container, false);
+
+        DBHelper db = new DBHelper(getActivity());
+        ProdutoDB produtoDB = new ProdutoDB(db);
+
+        EditText nomeProduto = view.findViewById(R.id.produtoNome);
+        EditText marca = view.findViewById(R.id.produtoMarca);
+        EditText quantidade = view.findViewById(R.id.produtoQuantidade);
+        EditText preco = view.findViewById(R.id.produtoPreco);
+        Button btnSalvar = view.findViewById(R.id.produtoSalvar);
+
+        btnSalvar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Produto produto = new Produto();
+
+                produto.setNome(nomeProduto.getText().toString());
+                produto.setMarca(marca.getText().toString());
+                produto.setQuantidade(Integer.parseInt(quantidade.getText().toString()));
+                produto.setPreco(Float.parseFloat(preco.getText().toString()));
+
+                produtoDB.inserir(produto);
+
+                FragmentoListarProduto.atualizarListaProduto();
+                Toast.makeText(getActivity(), "Salvo com sucesso!", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        return view;
     }
 }

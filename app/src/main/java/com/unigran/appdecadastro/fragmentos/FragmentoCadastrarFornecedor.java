@@ -7,8 +7,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.unigran.appdecadastro.R;
+import com.unigran.appdecadastro.db.DBHelper;
+import com.unigran.appdecadastro.db.FornecedorDB;
+import com.unigran.appdecadastro.entidades.Fornecedor;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,7 +66,32 @@ public class FragmentoCadastrarFornecedor extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragmento_cadastrar_fornecedor, container, false);
+        View view = inflater.inflate(R.layout.fragmento_cadastrar_fornecedor, container, false);
+
+        DBHelper db = new DBHelper(getActivity());
+        FornecedorDB fornecedorDB = new FornecedorDB(db);
+
+        EditText nomeFantasia = view.findViewById(R.id.fornecedorNome);
+        EditText email = view.findViewById(R.id.fornecedorEmail);
+        EditText telefone = view.findViewById(R.id.fornecedorTelefone);
+        Button btnSalvar = view.findViewById(R.id.forncedorSalvar);
+
+        btnSalvar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fornecedor fornecedor = new Fornecedor();
+
+                fornecedor.setNomeFantasia(nomeFantasia.getText().toString());
+                fornecedor.setEmail(email.getText().toString());
+                fornecedor.setTelefone(telefone.getText().toString());
+
+                fornecedorDB.inserir(fornecedor);
+
+                FragmentoListarFornecedor.atualizarListaForncedor();
+                Toast.makeText(getActivity(), "Salvo com sucesso!", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        return view;
     }
 }

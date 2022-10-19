@@ -7,8 +7,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.unigran.appdecadastro.R;
+import com.unigran.appdecadastro.db.ClienteDB;
+import com.unigran.appdecadastro.db.DBHelper;
+import com.unigran.appdecadastro.entidades.Cliente;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,7 +66,32 @@ public class FragmentoCadastrarCliente extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragmento_cadastrar_cliente, container, false);
+        View view = inflater.inflate(R.layout.fragmento_cadastrar_cliente, container, false);
+
+        DBHelper db = new DBHelper(getActivity());
+        ClienteDB clienteDB = new ClienteDB(db);
+
+        EditText nome = view.findViewById(R.id.clienteNome);
+        EditText email = view.findViewById(R.id.clienteEmail);
+        EditText telefone = view.findViewById(R.id.clienteTelefone);
+        Button btnSalvar = view.findViewById(R.id.clienteSalvar);
+
+        btnSalvar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Cliente cliente = new Cliente();
+
+                cliente.setNome(nome.getText().toString());
+                cliente.setEmail(email.getText().toString());
+                cliente.setTelefone(telefone.getText().toString());
+
+                clienteDB.inserir(cliente);
+
+                FragmentoListarCliente.atualizarListaCliente();
+                Toast.makeText(getActivity(), "Salvo com sucesso!", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        return view;
     }
 }
