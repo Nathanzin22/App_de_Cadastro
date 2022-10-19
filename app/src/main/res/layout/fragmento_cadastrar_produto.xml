@@ -8,7 +8,7 @@
     tools:context=".fragmentos.FragmentoCadastrarProduto">
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/produtoNome"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -24,7 +24,7 @@
         android:autofillHints="" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/produtoMarca"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -36,11 +36,11 @@
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
+        app:layout_constraintTop_toBottomOf="@+id/produtoNome"
         android:autofillHints="" />
 
     <EditText
-        android:id="@+id/editTextNumber"
+        android:id="@+id/produtoQuantidade"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -53,11 +53,11 @@
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2"
+        app:layout_constraintTop_toBottomOf="@+id/produtoMarca"
         tools:ignore="TextContrastCheck" />
 
     <EditText
-        android:id="@+id/editTextNumberDecimal"
+        android:id="@+id/produtoPreco"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -69,11 +69,11 @@
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNumber"
+        app:layout_constraintTop_toBottomOf="@+id/produtoQuantidade"
         android:autofillHints="" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/produtoSalvar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -82,5 +82,5 @@
         android:text="@string/salvar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNumberDecimal" />
+        app:layout_constraintTop_toBottomOf="@+id/produtoPreco" />
 </androidx.constraintlayout.widget.ConstraintLayout>
